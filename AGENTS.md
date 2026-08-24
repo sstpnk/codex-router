@@ -33,6 +33,11 @@ Platform launchers live at the repo root (`start.ps1`, `start.sh`). They check
 for Node and exec `src/proxy/main.mjs`, passing arguments through. Keep them
 dependency-free one-liners at heart.
 
+`start-codex-tinyllm.ps1` launches the Windows Codex desktop app against a
+separate `CODEX_HOME` (`~/.codex-tinyllm`) via `Invoke-CommandInDesktopPackage`
+(package identity bypasses MSIX ACLs; the broker drops the caller environment,
+so a generated temp `.cmd` sets `CODEX_HOME` itself).
+
 ## Tests
 
 The proxy smoke tests live outside this repository in a temp folder; after any

@@ -140,6 +140,20 @@ secret, and writes `~/.codex/codex-router/codex-config-snippet.toml`.
 Paste the generated snippet into `~/.codex/config.toml`, fully quit Codex,
 reopen it, and pick `your-model`. Every turn now flows through the proxy.
 
+**Codex desktop app (Windows):** the app rewrites `config.toml` and scopes
+chat history by provider, so wire a second instance instead. Create
+`~/.codex-tinyllm` with the snippet as `config.toml` plus
+`model_provider = "codex-router-proxy"` and `model = "..."` on top, then
+launch it with:
+
+```powershell
+.\start-codex-tinyllm.ps1
+```
+
+The launcher grants the MSIX package identity (direct `Codex.exe` access is
+ACL-blocked) and sets `CODEX_HOME` for it; the main app stays untouched. The
+app enforces a single-instance mutex, so the two instances run sequentially.
+
 ---
 
 ## Configuration
@@ -479,6 +493,21 @@ capability-секрет и пишет `~/.codex/codex-router/codex-config-snippe
 Вставьте сгенерированный сниппет в `~/.codex/config.toml`, полностью закройте
 Codex, откройте снова и выберите вашу модель. Теперь каждый ход идёт через
 прокси.
+
+**Десктоп-приложение Codex (Windows):** приложение переписывает `config.toml`
+и привязывает историю чатов к провайдеру, поэтому подключайте вторую копию.
+Создайте `~/.codex-tinyllm` со сниппетом как `config.toml`, добавив в начало
+`model_provider = "codex-router-proxy"` и `model = "..."`, и запускайте её
+через:
+
+```powershell
+.\start-codex-tinyllm.ps1
+```
+
+Лаунчер даёт процессу identity MSIX-пакета (прямой запуск `Codex.exe`
+блокируется ACL) и выставляет ему `CODEX_HOME`; основное приложение не
+затрагивается. Приложение держит single-instance mutex, поэтому копии
+работают по очереди.
 
 ---
 
