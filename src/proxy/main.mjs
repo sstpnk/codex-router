@@ -11,6 +11,7 @@ import crypto from "node:crypto";
 
 import {
   authenticatedRoute,
+  callerBasePath,
   validCallerSecret,
 } from "./caller-auth.mjs";
 
@@ -49,7 +50,7 @@ function loadOrCreateCallerKey() {
 }
 
 function writeConfigSnippet(config, callerKey) {
-  const capabilityBase = `http://${HOST}:${ROUTER_PORT}${authenticatedRoute(callerKey)}`;
+  const capabilityBase = `http://${HOST}:${ROUTER_PORT}${callerBasePath(callerKey)}`;
   const snippet = `# >>> codex-router-proxy >>>
 # Paste this block into ~/.codex/config.toml (outside any other table).
 # Remove the matching marked block to uninstall.
