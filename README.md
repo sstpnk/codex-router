@@ -155,7 +155,8 @@ a hard startup error rather than a silent misconfiguration.
 | --- | --- | --- |
 | `base_url` | string | Root of the OpenAI-compatible endpoint. The proxy appends `/chat/completions`. |
 | `api_key_env` | string | **Name** of an environment variable holding the API key. The value itself is never read from disk or stored by the proxy. Omit for keyless endpoints. |
-| `model` | string | Model slug sent upstream and advertised to Codex via `/v1/models`. |
+| `model` | string | Model slug advertised to Codex via `/v1/models`, written into the config snippet, and echoed back in responses. |
+| `model_upstream` | string | Optional. Slug actually sent to the endpoint when it routes under a different name. Defaults to `model`. |
 | `images` | string | Vision policy: `native`, `bridge`, `chatgpt`, or `off`. Default `native`. |
 
 ### `[vision]` — required iff `images = "bridge"`
@@ -494,7 +495,8 @@ Codex, откройте снова и выберите вашу модель. Т
 | --- | --- | --- |
 | `base_url` | строка | Корень OpenAI-совместимого эндпоинта. Прокси добавляет `/chat/completions`. |
 | `api_key_env` | строка | **Имя** переменной окружения с API-ключом. Само значение прокси никогда не читает с диска и не хранит. Для эндпоинтов без ключа — опустить. |
-| `model` | строка | Слаг модели, отправляется апстриму и объявляется Codex через `/v1/models`. |
+| `model` | строка | Слаг модели, который выбирает Codex: объявляется через `/v1/models`, попадает в сниппет и возвращается в ответах. |
+| `model_upstream` | строка | Опционален. Слаг, реально отправляемый эндпоинту, если тот маршрутизирует под другим именем. По умолчанию равен `model`. |
 | `images` | строка | Vision-политика: `native`, `bridge`, `chatgpt` или `off`. По умолчанию `native`. |
 
 ### `[vision]` — обязателен при `images = "bridge"`

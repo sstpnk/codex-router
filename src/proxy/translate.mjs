@@ -341,9 +341,11 @@ export class ChatToResponsesStream extends Transform {
   _ensureCreated(modelFromChunk) {
     if (this.createdAtSent) return;
     this.createdAtSent = true;
+    // The display model wins: when an upstream alias is configured, chunks echo
+    // the upstream slug and the client must never see it.
     this._emit("response.created", {
       type: "response.created",
-      response: baseResponse(this.responseId, modelFromChunk || this.targetModel, "in_progress"),
+      response: baseResponse(this.responseId, this.targetModel || modelFromChunk, "in_progress"),
     });
   }
 

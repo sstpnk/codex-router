@@ -255,7 +255,10 @@ export function createProxyServer({ config, callerKey }) {
     }
 
     const streaming = Boolean(responsesBody.stream);
-    const { body: chatBody, warnings } = translateRequest(responsesBody, config.primary.model);
+    const { body: chatBody, warnings } = translateRequest(
+      responsesBody,
+      config.primary.upstreamModel,
+    );
     for (const warning of warnings) log("translate warning:", warning);
 
     const payload = Buffer.from(JSON.stringify(chatBody), "utf8");
@@ -317,6 +320,8 @@ export function createProxyServer({ config, callerKey }) {
       }
       // Returns a patched copy only when the payload qualifies.
       payloadOut = substituteZeroInputUsage(payloadOut, estimatedInputTokens) ?? payloadOut;
+      // Codex believes it talks to `model`; never leak the upstream slug here.
+      payloadOut.model = config.primary.model;
       writeJson(response, 200, payloadOut);
       return;
     }

@@ -5,8 +5,9 @@
 //   [primary]
 //   base_url = "https://llm.stpnk.tech/v1"
 //   api_key_env = "TINYLLM_API_KEY"
-//   model = "tinyllm-main"
-//   images = "native"            # native | bridge | chatgpt | off
+//   model = "tinyllm-main"         # slug Codex picks and sees everywhere
+//   model_upstream = "prod-slug"   # optional; slug actually sent upstream
+//   images = "native"              # native | bridge | chatgpt | off
 //
 //   [vision]                     # optional, required when images = "bridge"
 //   base_url = "http://127.0.0.1:11434/v1"
@@ -97,6 +98,13 @@ export function validateConfig(raw) {
   }
   const model = requireString(primary, "model");
 
+  // Optional display/upstream split: Codex picks `model` and sees it in the
+  // catalog, while requests carry `model_upstream` when the endpoint routes
+  // under a different slug. Absent or empty means "same as model".
+  const modelUpstreamRaw =
+    typeof primary.model_upstream === "string" ? primary.model_upstream.trim() : "";
+  const upstreamModel = modelUpstreamRaw || model;
+
   const images = (primary.images || "native").trim();
   if (!IMAGE_MODES.includes(images)) {
     throw new ConfigError(
@@ -109,6 +117,7 @@ export function validateConfig(raw) {
       baseUrl: baseUrl.replace(/\/+$/, ""),
       apiKeyEnv: typeof primary.api_key_env === "string" ? primary.api_key_env.trim() : "",
       model,
+      upstreamModel,
       images,
     },
     vision: null,

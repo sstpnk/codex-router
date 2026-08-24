@@ -79,7 +79,11 @@ function main() {
   server.listen(ROUTER_PORT, HOST, () => {
     console.log(`codex-router-proxy listening on http://${HOST}:${ROUTER_PORT}`);
     console.log(`  endpoint : ${config.primary.baseUrl}`);
-    console.log(`  model    : ${config.primary.model}`);
+    const modelLabel =
+      config.primary.upstreamModel === config.primary.model
+        ? config.primary.model
+        : `${config.primary.model} -> ${config.primary.upstreamModel}`;
+    console.log(`  model    : ${modelLabel}`);
     console.log(`  images   : ${config.primary.images}${config.vision ? ` -> ${config.vision.model}` : ""}`);
     if (generated) {
       console.log("  new capability secret generated");
