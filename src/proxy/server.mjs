@@ -17,6 +17,7 @@ import {
 } from "./response-usage.mjs";
 
 import {
+  NATIVE_BASE,
   QUIET,
 } from "./paths.mjs";
 import { resolveKey } from "./config.mjs";
@@ -113,7 +114,8 @@ export function createProxyServer({ config, callerKey }) {
       remainder = authenticatedRoute(url.pathname, callerKey);
     } catch {
       remainder = undefined;
-    }    if (remainder === undefined || !remainder.startsWith("/v1/")) {
+    }
+    if (remainder === undefined || !remainder.startsWith("/v1/")) {
       log("rejected request to", redactCallerUrl(url.pathname));
       writeJson(response, 404, {
         error: { type: "not_found", message: "Unknown route." },
@@ -260,6 +262,10 @@ export function createProxyServer({ config, callerKey }) {
       config.primary.upstreamModel,
     );
     for (const warning of warnings) log("translate warning:", warning);
+    log(
+      `responses: model ${responsesBody.model || "?"} -> ${config.primary.upstreamModel}` +
+        ` (${streaming ? "stream" : "json"})`,
+    );
 
     const payload = Buffer.from(JSON.stringify(chatBody), "utf8");
     const apiKey = resolveKey(config.primary.apiKeyEnv);
