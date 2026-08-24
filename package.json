@@ -1,17 +1,13 @@
 {
-  "name": "codex-model-router",
-  "version": "0.4.0-beta.2",
+  "name": "codex-router-proxy",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Extensible local model router for Codex and Cursor",
+  "description": "Thin local proxy: OpenAI Responses API (Codex) -> any OpenAI-compatible Chat Completions endpoint, with optional vision bridge",
   "engines": {
     "node": ">=22.19.0"
   },
   "scripts": {
-    "check": "node scripts-check.mjs",
-    "test": "node --test test/*.test.mjs"
-  },
-  "dependencies": {
-    "proper-lockfile": "4.1.2"
+    "start": "node src/proxy/main.mjs"
   }
 }

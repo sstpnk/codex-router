@@ -1,13 +1,15 @@
-# Attribution
+# NOTICE
 
-This project uses the merged-model-catalog and built-in-provider routing
-pattern demonstrated by [opencodex](https://github.com/lidge-jun/opencodex).
-The implementation in this repository provides a registry-driven local router
-for Codex plus built-in Kimi and DeepSeek integrations.
+This project is a distilled, single-endpoint derivative of
+**[duolahypercho/codex-router](https://github.com/duolahypercho/codex-router)**.
 
-`opencodex` is distributed under the MIT License. Copyright (c) 2026
-opencodex contributors.
+The capability-path caller authentication, the bounded pre-stream retry
+discipline, the zero-prompt-usage substitution, and the vision evidence bridge
+are derived from that codebase. All credit for the original design belongs to
+its author and contributors; please support the upstream project.
 
-This is an independent community project. It is not affiliated with or
-endorsed by OpenAI, Anthropic, Moonshot AI, the Kimi Code team, DeepSeek, or
-OpenRouter.
+`opencodex` (https://github.com/lidge-jun/opencodex), whose patterns informed
+the original router, is distributed under the MIT License.
+
+This is an independent community project. It is not affiliated with or endorsed
+by OpenAI, Anthropic, Moonshot AI, or any model provider.
